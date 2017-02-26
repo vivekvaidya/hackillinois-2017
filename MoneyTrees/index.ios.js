@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PropTypes, Component } from 'react';
 import {
   AppRegistry,
   StyleSheet,
@@ -6,23 +6,38 @@ import {
   Text,
   View,
   TouchableHighlight,
-  Navigator,
   AlertIOS
 } from 'react-native';
+
+import { withRouter } from 'react-router'
 import Button from 'react-native-button';
 
-export default class MoneyTrees extends Component {
-  _handlePress() {
+class MoneyTrees extends React.Component {
+
+  _handlePress = () => {
     AlertIOS.prompt(
       'Login to MoneyTrees',
       'Welcome back, Vivek. Sign in below.',
       [
         {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
-        {text: 'OK', onPress: () =>  }
+        {text: 'OK', onPress: password => console.log('OK Pressed, password: ' + password)},
       ],
       'secure-text'
-    );
- }
+    )
+  }
+
+  constructor(props) {
+      super(props)
+      this.nextPage = this.nextPage.bind(this);
+  }
+
+  nextPage() {
+    this.props.router({
+      name: "Second",
+      component: Second
+    });
+  }
+
   render() {
     return (
       <View style = {styles.container}>
@@ -38,11 +53,28 @@ export default class MoneyTrees extends Component {
       <Button
         style={{fontSize: 20, color: 'green'}}
         styleDisabled={{color: 'red'}}
-        onPress={() => this._handlePress()}>
+        onPress={this.nextPage.push}>
         Sign Up
       </Button>
       </View>
-    );
+    )
+  }
+}
+
+const firstRoute = {
+  name: 'Welcome!',
+  component: MoneyTrees,
+};
+
+class Second extends React.Component{
+  render() {
+    return (
+      <View style={styles.container}>
+        <Text>
+          Second
+        </Text>
+      </View>
+    )
   }
 }
 
@@ -68,6 +100,9 @@ const styles = StyleSheet.create({
     color: '#333333',
     marginBottom: 7,
   },
-});
+})
 
-AppRegistry.registerComponent('MoneyTrees', () => MoneyTrees);
+export default withRouter(MoneyTrees)
+
+
+AppRegistry.registerComponent('MoneyTrees', () => MoneyTrees)

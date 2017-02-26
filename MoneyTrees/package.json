@@ -9,7 +9,9 @@
   "dependencies": {
     "react": "~15.4.0",
     "react-native": "0.41.2",
-    "react-native-button": "^1.8.2"
+    "react-native-button": "^1.8.2",
+    "react-native-navigation": "^2.0.0-experimental.229",
+    "react-native-simple-router": "^0.12.0"
   },
   "devDependencies": {
     "babel-jest": "19.0.0",
